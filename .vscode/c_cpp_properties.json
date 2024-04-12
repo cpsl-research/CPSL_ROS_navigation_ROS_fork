@@ -1,0 +1,51 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/cpsl/SDK_ws/devel/include/**",
+        "/home/cpsl/catkin_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/amcl/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/base_local_planner/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/carrot_planner/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/clear_costmap_recovery/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/costmap_2d/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/dataset_generator/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/dwa_local_planner/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/global_planner/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/map_server/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/move_base/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/move_slow_and_clear/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/nav_core/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/navfn/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_connect/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_datasets/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_launch/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_mmseg/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_msgs/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_odometry/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_sig_processing/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_TI_Radar_ROS/radar_views/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/rotate_recovery/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_ROS_Velodyne/velodyne_driver/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_ROS_Velodyne/velodyne_laserscan/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_ROS_Velodyne/velodyne_pcl/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/CPSL_ROS_Velodyne/velodyne_pointcloud/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_Sensors/vicon_viz/include/**",
+        "/home/cpsl/catkin_ws/src/CPSL_ROS_navigation/voxel_grid/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

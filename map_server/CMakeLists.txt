@@ -6,6 +6,9 @@ find_package(catkin REQUIRED
             roscpp
             nav_msgs
             tf2
+            rospy
+            sensor_msgs
+            std_msgs
         )
 
 find_package(Bullet REQUIRED)
@@ -36,6 +39,9 @@ catkin_package(
         roscpp
         nav_msgs
         tf2
+        rospy
+        sensor_msgs
+        std_msgs
 )
 
 include_directories(
@@ -110,6 +116,11 @@ if(CATKIN_ENABLE_TESTING)
 endif()
 
 ## Install executables and/or libraries
+catkin_install_python(PROGRAMS
+  scripts/map_server_sensor_updates.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 install(TARGETS map_server-map_saver map_server
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

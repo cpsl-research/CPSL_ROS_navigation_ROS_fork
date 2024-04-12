@@ -20,12 +20,23 @@
 
     <depend>bullet</depend>
     <depend>nav_msgs</depend>
+    <depend>sensor_msgs</depend>
+    <depend>std_msgs</depend>
+    <depend>jsk_recognition_msgs</depend>
+    <depend>jsk_rviz_plugins</depend>
     <depend>roscpp</depend>
+    <depend>rospy</depend>
     <depend>sdl</depend>
     <depend>sdl-image</depend>
     <depend>tf2</depend>
     <depend>yaml-cpp</depend>
+  <!-- The following was added to make the real-time updating map server python nodes -->
+    <exec_depend>python3-numpy</exec_depend>
+    <exec_depend>python3-sklearn</exec_depend>
+    <exec_depend>python3-opencv</exec_depend>
+    <exec_depend>python3-yaml</exec_depend>
 
+    <!-- End additional code -->
     <test_depend>roslib</test_depend>
     <test_depend>rospy</test_depend>
     <test_depend>rostest</test_depend>
