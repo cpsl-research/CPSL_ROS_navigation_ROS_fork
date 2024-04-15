@@ -1,11 +1,13 @@
 <launch>
     <arg name="map_path" default="/home/cpsl/data/maps/CPSL_clean.yaml"/>
-    <arg name="map_topic_static" default="/map/static"/>
-    <arg name="map_topic_dynamic" default="/map/dynamic"/>
+    <arg name="map_topic_static" default="/map"/>
+    <arg name="map_topic_dynamic" default="/modified_map"/>
     <arg name="map_frame_id" default="map"/>
     <arg name="update_rate_Hz" default="0.25"/>
-    <arg name="point_cloud_updates_enabled" default="False"/>
+    <arg name="point_cloud_updates_enabled" default="false"/>
     <arg name="point_cloud_updates_topic" default="/lidar_cloudout"/>
+    <arg name="bounding_box_updates_enabled" default="true"/>
+    <arg name="bounding_box_updates_topic" default="/bbox_3d_array"/>
     <node pkg="map_server" type="map_server_sensor_updates.py" name="map_server_sensor_updates" output = "screen">
         <param name="map_path" value="$(arg map_path)"/>
         <param name="map_topic_static" value="$(arg map_topic_static)"/>
@@ -14,5 +16,7 @@
         <param name="update_rate_Hz" value="$(arg update_rate_Hz)"/>
         <param name="point_cloud_updates_enabled" value="$(arg point_cloud_updates_enabled)"/>
         <param name="point_cloud_updates_topic" value="$(arg point_cloud_updates_topic)"/>
+        <param name="bounding_box_updates_enabled" value="$(arg bounding_box_updates_enabled)"/>
+        <param name="bounding_box_updates_topic" value="$(arg bounding_box_updates_topic)"/>
     </node>
 </launch>
