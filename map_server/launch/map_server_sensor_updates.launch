@@ -4,8 +4,8 @@
     <arg name="map_topic_dynamic" default="/modified_map"/>
     <arg name="map_frame_id" default="map"/>
     <arg name="update_rate_Hz" default="0.25"/>
-    <arg name="point_cloud_updates_enabled" default="false"/>
-    <arg name="point_cloud_updates_topic" default="/lidar_cloudout"/>
+    <arg name="point_cloud_updates_enabled" default="true"/>
+    <arg name="point_cloud_updates_topic" default="/lidar/cloudout"/>
     <arg name="bounding_box_updates_enabled" default="false"/>
     <arg name="bounding_box_updates_topic" default="/bbox_3d_array"/>
     <node pkg="map_server" type="map_server_sensor_updates.py" name="map_server_sensor_updates" output = "screen">
