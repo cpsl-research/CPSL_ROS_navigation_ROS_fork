@@ -8,6 +8,9 @@
     <arg name="point_cloud_updates_topic" default="/lidar/cloudout"/>
     <arg name="bounding_box_updates_enabled" default="false"/>
     <arg name="bounding_box_updates_topic" default="/bbox_3d_array"/>
+    <arg name="known_agent_map_removal_enabled" default="True"/>
+    <arg name="known_agent_topic" default="/radar/filter/odometry"/>
+    <arg name="known_agent_filter_radius_m" default="1.0"/>
     <node pkg="map_server" type="map_server_sensor_updates.py" name="map_server_sensor_updates" output = "screen">
         <param name="map_path" value="$(arg map_path)"/>
         <param name="map_topic_static" value="$(arg map_topic_static)"/>
@@ -18,5 +21,8 @@
         <param name="point_cloud_updates_topic" value="$(arg point_cloud_updates_topic)"/>
         <param name="bounding_box_updates_enabled" value="$(arg bounding_box_updates_enabled)"/>
         <param name="bounding_box_updates_topic" value="$(arg bounding_box_updates_topic)"/>
+        <param name="known_agent_map_removal_enabled" value="$(arg known_agent_map_removal_enabled)"/>
+        <param name="known_agent_topic" value="$(arg known_agent_topic)"/>
+        <param name="known_agent_filter_radius_m" value="$(arg known_agent_filter_radius_m)"/>
     </node>
 </launch>

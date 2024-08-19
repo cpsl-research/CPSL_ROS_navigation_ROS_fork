@@ -7,7 +7,7 @@ from sensor_msgs.msg import PointCloud2
 import sensor_msgs.point_cloud2 as pc2
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
 from tf2_geometry_msgs.tf2_geometry_msgs import do_transform_pose
-from nav_msgs.msg import OccupancyGrid,MapMetaData
+from nav_msgs.msg import OccupancyGrid,MapMetaData,Odometry
 from geometry_msgs.msg import Pose,Point,Quaternion,PoseStamped
 from tf.transformations import quaternion_from_euler,euler_from_quaternion
 import tf2_ros
@@ -58,6 +58,20 @@ class MapServerSensorUpdates:
             default='/bbox_3d_array'
         )
 
+        #specify ROS params - for removing known agents from the map perception
+        self.known_agent_map_removal_enabled = bool(rospy.get_param(
+            param_name='~known_agent_map_removal_enabled',
+            default=False
+        ))
+        self.known_agent_topic = rospy.get_param(
+            param_name="~known_agent_topic",
+            default='/radar/filter/odometry'
+        )
+        self.known_agent_filter_radius_m = float(rospy.get_param(
+            param_name="~known_agent_filter_radius_m",
+            default='1.0'
+        ))
+
         #static map characteristics
         self.map_resolution:float = 0.0
         self.map_width:int = 0
@@ -86,6 +100,10 @@ class MapServerSensorUpdates:
         self.bounding_box_mask_latest = None
         self.bounding_box_mask_history = None
 
+        #known agent pose
+        self.known_agent_sub:rospy.Subscriber = None
+        self.known_agent_latest_odom_msg = None
+
         #initialize the map
         self.init_map_server()
 
@@ -95,6 +113,8 @@ class MapServerSensorUpdates:
         if self.bounding_box_updates_enabled:
             self.bounding_box_history_reset()
             self.bounding_box_sub_init()
+        if self.known_agent_map_removal_enabled:
+            self.known_a
 
         #start a time to run the node at the given intervals
         rospy.Timer(
@@ -302,6 +322,7 @@ class MapServerSensorUpdates:
 
         if point_cloud_transformed is not None:
 
+            #get the occupied mask and filter out known agent locations
             self.point_cloud_mask_latest = \
                 self.point_cloud_get_occupied_mask(point_cloud_transformed)
 
@@ -345,6 +366,11 @@ class MapServerSensorUpdates:
 
         #get only the 2d points
         points = points[:,:2]
+
+        #remove instances of other agents if desired
+        if self.known_agent_map_removal_enabled:
+            if self.known_agent_latest_odom_msg is not None:
+                points = self.known_agent_filter_points(points)
 
         x_indicies = np.floor(
             (points[:,0] - self.map_origin.position.x) / self.map_resolution
@@ -543,7 +569,65 @@ class MapServerSensorUpdates:
             [np.cos(rot_angle_rad), -1.0 * np.sin(rot_angle_rad)],
             [np.sin(rot_angle_rad), np.cos(rot_angle_rad)]
         ])
+    
+    ####################################################################
+    # Known agent tracking and removal from the map
+    ####################################################################
+    def known_agent_sub_init(self):
+        """_summary_
 
+        Returns:
+            _type_: _description_
+        """
+        self.known_agent_sub = rospy.Subscriber(
+            name=self.known_agent_topic,
+            data_class=Odometry,
+            callback=self.known_agent_sub_callback,
+            queue_size=1
+        )
+        rospy.loginfo("{} subscribed to topic {}".format(
+            "map server",
+            self.known_agent_topic
+        ))
+    
+    def known_agent_sub_callback(self,msg:Odometry):
+        """Call back function for any time a new message is received
+        by the known agent subscriber
+
+        Args:
+            msg (Odometry): a ROS Odometry message containing the latest
+            odometry of the map with respect to the agent
+        """
+        self.known_agent_latest_odom_msg = msg
+
+    def known_agent_filter_points(self,points:np.ndarray):
+
+        """Removes specific detections where the sensor has detected another
+         agent in the environment
+
+        Args:
+            current_points (np.ndarray): Nx2 numpy array containing
+             at least the [x,y] coordinates of detections in the global
+             map frame
+
+        Returns:
+            np.ndarray: current detection list without the points where
+            the sensor detected itself
+        """
+
+        #get the position of the agent
+        pose = np.array([
+            self.known_agent_latest_odom_msg.pose.pose.position.x,
+            self.known_agent_latest_odom_msg.pose.pose.position.y
+        ])
+
+        diff = points[:,0:2] - pose
+
+        distances = np.linalg.norm(diff,axis=1)
+
+        invalid_idxs = distances < self.known_agent_filter_radius_m
+
+        return points[~invalid_idxs,:]
 
     ####################################################################
     # Other helper functions
