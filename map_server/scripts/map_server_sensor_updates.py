@@ -114,7 +114,7 @@ class MapServerSensorUpdates:
             self.bounding_box_history_reset()
             self.bounding_box_sub_init()
         if self.known_agent_map_removal_enabled:
-            self.known_a
+            self.known_agent_sub_init()
 
         #start a time to run the node at the given intervals
         rospy.Timer(
